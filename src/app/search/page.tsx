@@ -1,28 +1,52 @@
 import Link from "next/link";
 
-export default function Search({ params }: { params: { id?: string } }) {
+import { CloseOverlayButton } from "@/Overlay/CloseOverlayButton";
+import { OverlayPage } from "@/Overlay/OverlayPage";
+
+export default function Search({
+  params,
+}: {
+  params: { id: string | undefined };
+}) {
   return (
-    <div className="flex flex-col gap-4">
-      <h1>Search Page</h1>
-      <div className="flex gap-4">
-        <Link
-          href="/search/property/1"
-          className={params.id === "1" ? "font-bold" : ""}
-        >
-          Property 1
-        </Link>
-        <Link
-          href="/search/property/2"
-          className={params.id === "2" ? "font-bold" : ""}
-        >
-          Property 2
-        </Link>
-      </div>
-      {!!params.id && (
-        <div className="px-4">
-          <h2>Property - {params.id}</h2>
+    <OverlayPage
+      sharedPath="/search"
+      overlaySubPath="/property/[id]"
+      params={params}
+      overlayFallback={<Spinner />}
+      overlayLoaderAction={propertyOverlayAction}
+    >
+      <div className="flex flex-col gap-4">
+        <h1>Search Page</h1>
+        <div className="flex gap-4">
+          <Link href="/search/property/1">Property 1</Link>
+          <Link href="/search/property/2">Property 2</Link>
         </div>
-      )}
+      </div>
+    </OverlayPage>
+  );
+}
+
+export function Spinner() {
+  return (
+    <div className="h-full w-full flex justify-center items-center">
+      <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-current" />
+    </div>
+  );
+}
+
+export async function propertyOverlayAction(params: { id: string }) {
+  "use server";
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  return (
+    <div className="p-8 flex flex-col gap-4 items-start">
+      <h2 className="font-bold">Property - {params.id}</h2>
+      <Link href={`/search/property/${params.id === "1" ? "2" : "1"}`}>
+        Go to Property {params.id === "1" ? "2" : "1"}
+      </Link>
+      <CloseOverlayButton>Close Overlay</CloseOverlayButton>
     </div>
   );
 }
