@@ -42,11 +42,18 @@ export function Spinner() {
 export async function propertyOverlayAction(params: { id: string }) {
   "use server";
 
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const now = new Date();
 
   return (
     <div className="p-8 flex flex-col gap-4 items-start">
       <h2 className="font-bold">Property - {params.id}</h2>
+      <p>
+        Rendered at {now.getHours().toString().padStart(2, "0")}:
+        {now.getMinutes().toString().padStart(2, "0")}:
+        {now.getSeconds().toString().padStart(2, "0")}
+      </p>
       <Link
         href={`/search/property/${params.id === "1" ? "2" : "1"}`}
         className="hover:underline"
