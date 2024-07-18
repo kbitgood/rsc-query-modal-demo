@@ -19,8 +19,12 @@ export default function Search({
       <div className="flex flex-col gap-4">
         <h1>Search Page</h1>
         <div className="flex gap-4">
-          <Link href="/search/property/1">Property 1</Link>
-          <Link href="/search/property/2">Property 2</Link>
+          <Link href="/search/property/1" className="hover:underline">
+            Property 1
+          </Link>
+          <Link href="/search/property/2" className="hover:underline">
+            Property 2
+          </Link>
         </div>
       </div>
     </OverlayPage>
@@ -43,10 +47,15 @@ export async function propertyOverlayAction(params: { id: string }) {
   return (
     <div className="p-8 flex flex-col gap-4 items-start">
       <h2 className="font-bold">Property - {params.id}</h2>
-      <Link href={`/search/property/${params.id === "1" ? "2" : "1"}`}>
+      <Link
+        href={`/search/property/${params.id === "1" ? "2" : "1"}`}
+        className="hover:underline"
+      >
         Go to Property {params.id === "1" ? "2" : "1"}
       </Link>
-      <CloseOverlayButton>Close Overlay</CloseOverlayButton>
+      <CloseOverlayButton className="hover:underline">
+        Close Overlay
+      </CloseOverlayButton>
     </div>
   );
 }

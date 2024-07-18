@@ -20,18 +20,29 @@ export default function RootLayout({
       <body>
         <QueryClientProvider client={queryClient}>
           <nav className="py-2 px-4 border-b flex gap-4">
-            <Link href="/" className={pathname === "/" ? "font-bold" : ""}>
+            <Link
+              href="/"
+              className={
+                "hover:underline " + (pathname === "/" ? "font-bold" : "")
+              }
+            >
               Home
             </Link>
             <Link
               href="/about"
-              className={pathname.startsWith("/about") ? "font-bold" : ""}
+              className={
+                "hover:underline " +
+                (pathname.startsWith("/about") ? "font-bold" : "")
+              }
             >
               About
             </Link>
             <Link
               href="/search"
-              className={pathname.startsWith("/search") ? "font-bold" : ""}
+              className={
+                "hover:underline " +
+                (pathname.startsWith("/search") ? "font-bold" : "")
+              }
             >
               Search
             </Link>
